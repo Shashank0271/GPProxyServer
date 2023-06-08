@@ -30,10 +30,12 @@ app.get("/health", async function (req, res) {
 });
 
 app.get("/api/v1/geocode", cache("5 minutes"), async function (req, res) {
+  console.log(req.body);
   const { city, state } = req.body;
   const response = await axios.get(
     `${baseUrl}/v1/geocode/search?city=${city}&state=${state}&country=India&format=json&apiKey=${apiKey}`
   );
+  console.log(response.data);
   const pointsOfInterest = await getPointsOfInterest(response);
   res.status(200).json(pointsOfInterest);
 });
