@@ -28,7 +28,7 @@ app.get("/health", async function (req, res) {
   res.status(200).json();
 });
 
-app.get("/api/v1/geocode", async function (req, res) {
+app.get("/api/v1/geocode", cache("2 minutes"), async function (req, res) {
   const { city, state } = req.query;
   console.log(`entered geocode controller for CITY : ${city} STATE : ${state}`);
   const response = await axios.get(
@@ -38,20 +38,24 @@ app.get("/api/v1/geocode", async function (req, res) {
   res.status(200).json(pointsOfInterest);
 });
 
-app.get("/api/v1/geocode/reverse", async function (req, res) {
-  const { lat, lon } = req.query;
-  console.log(
-    `entered reverse geocode controller with LAT = ${lat} and LON = ${lon}`
-  );
-  const response =
-    await axios.get(`${baseUrl}/v1/geocode/reverse?lat=${lat}&lon=${lon}&format=json&apiKey=${apiKey}
+app.get(
+  "/api/v1/geocode/reverse",
+  cache("2 minutes"),
+  async function (req, res) {
+    const { lat, lon } = req.query;
+    console.log(
+      `entered reverse geocode controller with LAT = ${lat} and LON = ${lon}`
+    );
+    const response =
+      await axios.get(`${baseUrl}/v1/geocode/reverse?lat=${lat}&lon=${lon}&format=json&apiKey=${apiKey}
     `);
-  const pointsOfInterest = await getPointsOfInterest(response);
-  console.log(pointsOfInterest);
-  res.status(200).json(pointsOfInterest);
-});
+    const pointsOfInterest = await getPointsOfInterest(response);
+    console.log(pointsOfInterest);
+    res.status(200).json(pointsOfInterest);
+  }
+);
 
-app.get("/api/v1/place-details", async function (req, res) {
+app.get("/api/v1/place-details", cache("2 minutes"), async function (req, res) {
   console.log("entered place details controller");
   const { placeId } = req.query;
   const response = await axios.get(
