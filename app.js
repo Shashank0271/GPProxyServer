@@ -62,5 +62,6 @@ app.get("/api/v1/place-details", cache("5 minutes"), async function (req, res) {
 });
 
 app.listen(port, function () {
+  console.log(process.env.PORT);
   console.log(`server listening on port ${port}`);
 });
