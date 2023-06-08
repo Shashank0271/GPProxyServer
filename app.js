@@ -30,12 +30,11 @@ app.get("/health", async function (req, res) {
 });
 
 app.get("/api/v1/geocode", cache("5 minutes"), async function (req, res) {
-  console.log(req.body);
+  console.log("entered geocode controller");
   const { city, state } = req.body;
   const response = await axios.get(
     `${baseUrl}/v1/geocode/search?city=${city}&state=${state}&country=India&format=json&apiKey=${apiKey}`
   );
-  console.log(response.data);
   const pointsOfInterest = await getPointsOfInterest(response);
   res.status(200).json(pointsOfInterest);
 });
@@ -44,6 +43,7 @@ app.get(
   "/api/v1/geocode/reverse",
   cache("5 minutes"),
   async function (req, res) {
+    console.log("entered reverse geocode controller");
     const { lat, lon } = req.query;
     const response =
       await axios.get(`${baseUrl}/v1/geocode/reverse?lat=${lat}&lon=${lon}&format=json&apiKey=${apiKey}
@@ -54,6 +54,7 @@ app.get(
 );
 
 app.get("/api/v1/place-details", cache("5 minutes"), async function (req, res) {
+  console.log("entered place details controller");
   const { placeId } = req.query;
   const response = await axios.get(
     `${baseUrl}/v2/place-details?id=${placeId}&apiKey=${apiKey}`
@@ -62,6 +63,5 @@ app.get("/api/v1/place-details", cache("5 minutes"), async function (req, res) {
 });
 
 app.listen(port, function () {
-  console.log(process.env.PORT);
   console.log(`server listening on port ${port}`);
 });
