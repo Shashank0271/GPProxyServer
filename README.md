@@ -49,6 +49,6 @@ proxy : ```Load Balancing (eg - NGINX server)```
 ### 🔗 Sources (reference)
 1. Hey Node : [What is api proxy](https://www.youtube.com/watch?v=7YMcpmxtNJA&t=201s&ab_channel=HeyNode)
 
-2. Hussein Nasser : [Proxy vs REverse Proxy Server Explained](https://www.youtube.com/watch?v=SqqrOspasag&t=684s&ab_channel=HusseinNasser)
+2. Hussein Nasser : [Proxy vs Reverse Proxy Server Explained](https://www.youtube.com/watch?v=SqqrOspasag&t=684s&ab_channel=HusseinNasser)
 
 

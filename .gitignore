@@ -1,2 +1,5 @@
 .env
 /node_modules
+whatisaproxy.txt
+proxy diagram.PNG
+reverse_proxy.PNG
