@@ -5,5 +5,25 @@ module.exports = async function (response) {
   const pointsOfInterest =
     await axios.get(`https://api.geoapify.com/v2/places?categories=entertainment&filter=place:${placeId}&limit=20&apiKey=${apiKey}
   `);
-  return pointsOfInterest.data;
+  const result = pointsOfInterest.data;
+  let requiredResponse = [];
+  result["features"].forEach((element) => {
+    const properties = element["properties"];
+    if (properties["name"]) {
+      const { name, city, street, suburb, formatted, place_id, postcode } =
+        properties;
+      const placeDetails = {
+        name,
+        city,
+        street,
+        suburb,
+        formatted,
+        place_id,
+        postcode,
+      };
+      placeDetails["coordinates"] = element["geometry"]["coordinates"];
+      requiredResponse.push(placeDetails);
+    }
+  });
+  return requiredResponse;
 };
