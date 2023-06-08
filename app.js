@@ -24,6 +24,11 @@ app.use(
 let cache = apicache.middleware;
 
 //routes
+
+app.get("/health", async function (req, res) {
+  res.status(200).json();
+});
+
 app.get("/api/v1/geocode", cache("5 minutes"), async function (req, res) {
   const { city, state } = req.body;
   const response = await axios.get(
